@@ -1,0 +1,12 @@
+﻿{
+  "SchemaVersion": 1,
+  "Name": "control-hl",
+  "ComponentId": "0C54D246-84B5-4895-BEC7-15C74F2D9A98",
+  "EntryPoint": "/bin/app",
+  "CmdArgs": [],
+  "Capabilities": {
+    "AllowedApplicationConnections": [ "4187B775-2AE9-4670-B151-1FA335D51398" ],
+    "Gpio": [ 12 ]
+  },
+  "ApplicationType": "Default"
+}

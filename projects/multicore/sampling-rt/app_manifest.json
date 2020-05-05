@@ -1,0 +1,14 @@
+{
+  "SchemaVersion": 1,
+  "Name": "sampling-rt",
+  "ComponentId": "4187B775-2AE9-4670-B151-1FA335D51398",
+  "EntryPoint": "/bin/app",
+  "CmdArgs": [],
+  "Capabilities": {
+    "Uart": [ "ISU3" ],
+    "AllowedApplicationConnections": [ "0C54D246-84B5-4895-BEC7-15C74F2D9A98" ],
+    "Gpio": [ 38, 36, 39 ],
+    "Adc": [ "ADC-CONTROLLER-0" ]
+  },
+  "ApplicationType": "RealTimeCapable"
+}

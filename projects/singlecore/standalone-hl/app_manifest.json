@@ -1,0 +1,12 @@
+{
+  "SchemaVersion": 1,
+  "Name": "standalone-hl",
+  "ComponentId": "D96C78D8-5132-467D-B41B-C1FCEAB79C24",
+  "EntryPoint": "/bin/app",
+  "CmdArgs": [],
+  "Capabilities": {
+    "Adc": [ "$MT3620_ADC_CONTROLLER0" ],
+    "Gpio": [ "$MT3620_GPIO38", "$MT3620_GPIO36", "$MT3620_GPIO39" ]
+  },
+  "ApplicationType": "Default"
+}
