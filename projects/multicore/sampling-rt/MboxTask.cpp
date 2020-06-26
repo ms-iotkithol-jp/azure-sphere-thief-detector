@@ -15,7 +15,7 @@ void MboxTask(void* params)
 {
 	printf("Mailbox Task Started.\n");
 
-	MboxDataWriteQueue = xQueueCreate(10, sizeof(float));
+	MboxDataWriteQueue = xQueueCreate(10, sizeof(QueueDataPacket));
 	if (MboxDataWriteQueue == nullptr) abort();
 
 	MailboxHLCore mbox;
@@ -30,14 +30,14 @@ void MboxTask(void* params)
 
 	while (true)
 	{
-		float mboxData;
+		QueueDataPacket mboxData;
 		if (xQueueReceive(MboxDataWriteQueue, &mboxData, pdMS_TO_TICKS(100)) == pdPASS)
 		{
-			printf("RMS = %f\n", mboxData);
+			printf("dataSize = %d, dataPtr = %08x\n", mboxData.dataSize, mboxData.dataPtr);
 
 			memcpy(mbox.GetMessagePtr(), messageHeader, MailboxHLCore::MESSAGE_HEADER_SIZE);
-			memcpy(&mbox.GetMessagePtr()[MailboxHLCore::MESSAGE_HEADER_SIZE], &mboxData, sizeof(mboxData));
-			u32 messageSendSize = MailboxHLCore::MESSAGE_HEADER_SIZE + sizeof(mboxData);
+			memcpy(&mbox.GetMessagePtr()[MailboxHLCore::MESSAGE_HEADER_SIZE], &mboxData.dataPtr, mboxData.dataSize);
+			u32 messageSendSize = MailboxHLCore::MESSAGE_HEADER_SIZE + mboxData.dataSize;
 			mbox.Send(messageSendSize);
 		}
 

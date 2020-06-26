@@ -17,8 +17,8 @@ SemaphoreHandle_t CaptureSemaphore;
 QueueHandle_t AdcDataWriteQueue = nullptr;
 QueueHandle_t AdcDataReadQueue = nullptr;
 
-static u32 AdcData[2][ADC_DATA_NUMBER];
-static u32* AdcDataPtr;
+static u16 AdcData[2][ADC_DATA_NUMBER];
+static u16* AdcDataPtr;
 static int AdcDataCount = 0;
 
 static void CaptureTickerHandler(void* cb_data)
@@ -39,9 +39,9 @@ void CaptureTask(void* params)
 
 	CaptureSemaphore = xSemaphoreCreateBinary();
 	if (CaptureSemaphore == nullptr) abort();
-	AdcDataWriteQueue = xQueueCreate(2, sizeof(u32*));
+	AdcDataWriteQueue = xQueueCreate(2, sizeof(u16*));
 	if (AdcDataWriteQueue == nullptr) abort();
-	AdcDataReadQueue = xQueueCreate(2, sizeof(u32*));
+	AdcDataReadQueue = xQueueCreate(2, sizeof(u16*));
 	if (AdcDataReadQueue == nullptr) abort();
 	AdcDataPtr = &AdcData[0][0];
 	printf("AdcData[0] = %#010lx\n", (unsigned long)AdcDataPtr);
@@ -69,7 +69,7 @@ void CaptureTask(void* params)
 			static DigitalOut debugTriggerCalculate{ DEBUG_PIN_TRIGGER_CALCULATE };
 			debugTriggerCalculate.Write(1);
 
-			u32* adcDataNextPtr;
+			u16* adcDataNextPtr;
 			if (xQueueReceive(AdcDataWriteQueue, &adcDataNextPtr, 0) != pdPASS)
 			{
 				printf("ERROR: Cannot pop from AdcDataWriteQueue.\n");
