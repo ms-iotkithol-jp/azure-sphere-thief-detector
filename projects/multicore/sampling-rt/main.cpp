@@ -69,9 +69,9 @@ _Noreturn void RTCoreMain()
 
 	printf("\n\n<<< sampling-rt >>>\n");
 
-	xTaskCreate(MboxTask, "Mailbox Task", 1024 / 4, nullptr, 0, nullptr);
-	xTaskCreate(CalculateTask, "Calculate Task", 1024 / 4, nullptr, 1, nullptr);
-	xTaskCreate(CaptureTask, "Capture Task", 1024 / 4, nullptr, 2, nullptr);
+	xTaskCreate(MboxTask, "Mailbox Task", 1024 / 2, nullptr, 0, nullptr);
+//	xTaskCreate(CalculateTask, "Calculate Task", 1024 / 4, nullptr, 1, nullptr);
+	xTaskCreate(CaptureTask, "Capture Task", 1024 / 2, nullptr, 2, nullptr);
 
 	vTaskStartScheduler();
 	for (;;)
