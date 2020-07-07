@@ -1,6 +1,6 @@
 ﻿{
   "SchemaVersion": 1,
-  "Name": "control-hl",
+  "Name": "control-azure-hl",
   "ComponentId": "1245294A-5F95-40F4-9AEA-C7F40D64104C",
   "EntryPoint": "/bin/app",
   "CmdArgs": [ "<- Your DPS ScopeId ->" ],
