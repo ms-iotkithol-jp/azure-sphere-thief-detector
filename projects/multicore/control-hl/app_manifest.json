@@ -1,12 +1,12 @@
 ﻿{
   "SchemaVersion": 1,
   "Name": "control-hl",
-  "ComponentId": "0C54D246-84B5-4895-BEC7-15C74F2D9A98",
+  "ComponentId": "1245294A-5F95-40F4-9AEA-C7F40D64104C",
   "EntryPoint": "/bin/app",
   "CmdArgs": [ "<- Your DPS ScopeId ->" ],
   "Capabilities": {
     "AllowedConnections": [ "global.azure-devices-provisioning.net", "<- your dps name ->.azure-devices-provisioning.net", "<- your IoT Hub Name ->.azure-devices.net" ],
-    "AllowedApplicationConnections": [ "4187B775-2AE9-4670-B151-1FA335D51398" ],
+    "AllowedApplicationConnections": [ "C0C33382-EBB5-486D-AB15-84DB92A387F3" ],
     "DeviceAuthentication": "<- your DPS device authentication ->",
     "Gpio": [ 12, 13 ]
   },

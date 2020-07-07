@@ -43,6 +43,18 @@ void CaptureTask(void* params)
 	if (AdcDataWriteQueue == nullptr) abort();
 	AdcDataReadQueue = xQueueCreate(2, sizeof(u16*));
 	if (AdcDataReadQueue == nullptr) abort();
+
+	/*
+	u16* tmpPtr;
+	BaseType_t qResult;
+	if ((qResult = xQueueReceive(AdcDataReadQueue, &tmpPtr, portMAX_DELAY)) != pdPASS) {
+		printf("ERROR: Failed to receive start message from MboxTask.\n");
+		abort();
+	}
+	else {
+		printf("INFO: Received start message from MboxTask.\n");
+	}
+	*/
 	AdcDataPtr = &AdcData[0][0];
 	printf("AdcData[0] = %#010lx\n", (unsigned long)AdcDataPtr);
 	if (xQueueSendToBack(AdcDataWriteQueue, &AdcDataPtr, 0) != pdPASS) abort();

@@ -10,10 +10,12 @@
 #include <applibs/networking.h>
 #include <sys/time.h>
 
-static const char RTAppCID[] = "4187B775-2AE9-4670-B151-1FA335D51398";
+static const char RTAppCID[] = "C0C33382-EBB5-486D-AB15-84DB92A387F3";
 
 // Azure IoT Sending
 #include "azureiotsend.h"
+
+#include "eventloop_timer_utilities.h"
 
 static const GPIO_Id BUTTON_PIN_A = 12;
 static const GPIO_Id BUTTON_PIN_B = 13;
@@ -32,16 +34,12 @@ int main(int argc, char* argv[])
         Log_Debug("ERROR: %d %s\n", errno, strerror(errno));
         abort();
     }
-
     const struct timeval recvTimeout = { .tv_sec = 1, .tv_usec = 0 };
     if (setsockopt(mailboxFd, SOL_SOCKET, SO_RCVTIMEO, &recvTimeout, sizeof(recvTimeout)) != 0)
     {
         Log_Debug("ERROR: %d %s\n", errno, strerror(errno));
         abort();
     }
-
-    Log_Debug("SEND: \"ping\"\n");
-    size_t sendSize = send(mailboxFd, "ping", 4, 0);
 
     bool isNetworkingReady = false;
     if ((Networking_IsNetworkingReady(&isNetworkingReady) == -1) || !isNetworkingReady) {
@@ -58,6 +56,9 @@ int main(int argc, char* argv[])
         isNetworkingReady = false;
     }
 
+    Log_Debug("SEND: \"ping\"\n");
+    size_t sendSize = send(mailboxFd, "ping", 4, 0);
+
     bool hasAPushed = false;
     bool hasBPushed = false;
     bool isSending = false;
@@ -65,8 +66,8 @@ int main(int argc, char* argv[])
     int captureHz = 4000;
     int sendUnitMilliSec = 1024;
     int capturingUnitSize = 4096;
-    int mailBoxMaxSize = 1024;
-    int packetNo = capturingUnitSize * sizeof(uint16_t) / mailBoxMaxSize;
+    int mailBoxMaxByte = 1024;
+    int packetNo = capturingUnitSize * sizeof(uint16_t) / mailBoxMaxByte;
     int packetIndex = 0;
     uint8_t recvData[MBOX_SEND_DATA_MAX_SIZE];
 
@@ -126,5 +127,6 @@ int main(int argc, char* argv[])
                 packetIndex = 0;
             }
         }
+        WorkOnEventLoop();
     }
 }

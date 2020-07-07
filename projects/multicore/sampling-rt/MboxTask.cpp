@@ -32,6 +32,14 @@ void MboxTask(void* params)
 	size_t messageReceiveSize;
 	while ((messageReceiveSize = mbox.Receive()) == 0) {}
 
+	/*
+	u16* tmpPtr = nullptr;
+	if (xQueueSendToBack(AdcDataReadQueue, &tmpPtr, 0) != pdPASS) {
+		printf("ERROR: Failed to send start message to CaptureTask.\n");
+		abort();
+	}
+	*/
+
 	u8 messageHeader[MailboxHLCore::MESSAGE_HEADER_SIZE];
 	memcpy(messageHeader, mbox.GetMessagePtr(), MailboxHLCore::MESSAGE_HEADER_SIZE);
 	printf("Received message of %d bytes (from A7)\n", messageReceiveSize);
